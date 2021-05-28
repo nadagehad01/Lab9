@@ -41,18 +41,23 @@
     <output></output>
   </fieldset>
 
+  <script>
+    var first = document.getElementById('first-num');
+    var second = document.getElementById('second-num');
+  </script>
+
   <section id="error-btns">
-    <button>Console Log Demo</button>
-    <button>Console Error Demo</button>
-    <button>Console Dir</button>
-    <button>Console dirxml</button>
-    <button>Console Group Start</button>
-    <button>Console Group End</button>
-    <button>Console Table</button>
-    <button>Start Timer</button>
-    <button>End Timer</button>
-    <button>Console Trace</button>
-    <button>Trigger a Global Error</button>
+    <button type="button" onclick=console.log(first,second)>Console Log Demo</button>
+    <button type="button">Console Error Demo</button>
+    <button type="button">Console Dir</button>
+    <button type="button">Console dirxml</button>
+    <button type="button">Console Group Start</button>
+    <button type="button">Console Group End</button>
+    <button type="button">Console Table</button>
+    <button type="button">Start Timer</button>
+    <button type="button">End Timer</button>
+    <button type="button">Console Trace</button>
+    <button type="button">Trigger a Global Error</button>
   </section>
 
   <script>
