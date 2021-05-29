@@ -67,11 +67,63 @@
       let firstNum = document.querySelector('#first-num').value;
       let secondNum = document.querySelector('#second-num').value;
       let operator = document.querySelector('#operator').value;
-      output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+      try{
+        output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+      }
+      catch(err){
+        console.log("Sadly an error happened friend");
+        output.innerHTML = '0';
+      }
     });
+
 
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
     // TODO - Make buttons functional
+    errorBtns[0].addEventListener('click',() => {
+      console.log("Console Log Demo");
+    });
+    errorBtns[1].addEventListener('click',() => {
+      console.error("Console Error Demo");
+    });
+    errorBtns[2].addEventListener('click',() => {
+      console.dir(errorBtns[2]);
+    });
+    errorBtns[3].addEventListener('click',() => {
+      console.dirxml(errorBtns[3]);
+    });
+    errorBtns[4].addEventListener('click',() => {
+      //console.group();
+    });
+    errorBtns[5].addEventListener('click',() => {
+      //console.groupEnd();
+    });
+    errorBtns[6].addEventListener('click',() => {
+      console.table([
+      {
+        name: 'Software Engineering',
+        num: 110,
+      },
+      {
+        name: 'Programming Languages',
+        num: 130,
+      },
+      {
+        name: 'Advanced Software Engineering',
+        num: 112,
+      }
+      ]);
+    });
+    errorBtns[7].addEventListener('click',() => {
+      console.time("timer");
+      console.log("Timer started!");
+    });
+    errorBtns[8].addEventListener('click',() => {
+      console.timeEnd("timer");
+      console.log("Timer ended!");
+    });
+
+
+
   </script>
 </body>
 </html>
