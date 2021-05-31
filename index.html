@@ -77,9 +77,19 @@
       }
     }
 
+    class noInput extends Error {
+      constructor(message) {
+        super(message); // (1)
+        this.name = "noInput"; // (2)
+      }
+    }
+
     function calc(fn, o, sn) {
       if (o == '/' && sn == 0) {
         throw new zeroError("Dividing by zero? I thought we were over that.");
+      }
+      if (fn == "" || sn == "") {
+        throw new noInput("An operation with only one operand? Mhmmm");
       }
       return eval(`${fn} ${o} ${sn}`);
     }
@@ -93,22 +103,28 @@
         output.innerHTML = calc(firstNum, operator, secondNum);
       }
       catch(err){
+        if (err instanceof noInput) {
+          window.onerror(err);
+        }
         if (err instanceof zeroError){
-          console.log("You need to review your 4th grade math :/");
+          console.error("You need to review your 4th grade math :/");
         }
         else{
         console.log("Sadly an error happened, friend");
         }
-
-      }
-      finally{
         output.innerHTML = '0';
         console.log("The result might not be accurate.")
       }
+      finally{
+        console.log("Log this either way.")
+      }
     });
 
-    window.onerror = function() {
-        alert("Error caught");
+    window.onerror = function(error) {
+      if (error instanceof noInput){
+        console.error("error with message \"" + error.message + "\" caught in window.onerror");
+
+      }
     };
 
 
@@ -127,13 +143,11 @@
       console.dirxml(errorBtns[3]);
     });
     errorBtns[4].addEventListener('click',() => {
-      var label = 'Easily the best group';
+      var label = 'Console log group';
       console.group(label);
-      console.info('Sidd');
-      console.info('Nada');
     });
     errorBtns[5].addEventListener('click',() => {
-      console.groupEnd('Easily the best group');
+      console.groupEnd('Console log group');
     });
     errorBtns[6].addEventListener('click',() => {
       console.table([
