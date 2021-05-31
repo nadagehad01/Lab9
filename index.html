@@ -41,6 +41,14 @@
     <output></output>
   </fieldset>
 
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+  <script>
+    window.TrackJS && TrackJS.install({ 
+      token: "bb160a514196489bb34401d835e8315a"
+      // for more configuration options, see https://docs.trackjs.com
+    });
+  </script>
+
   <script>
     var first = document.getElementById('first-num');
     var second = document.getElementById('second-num');
@@ -61,6 +69,20 @@
   </section>
 
   <script>
+
+    class zeroError extends Error {
+      constructor(message) {
+        super(message); // (1)
+        this.name = "MathError"; // (2)
+      }
+    }
+
+    function calc(fn, o, sn) {
+      if (o == '/' && sn == 0) {
+        throw new zeroError("Dividing by zero? I thought we were over that.");
+      }
+      return eval(`${fn} ${o} ${sn}`);
+    }
     let calculateBtn = document.querySelector('#calculate');
     calculateBtn.addEventListener('click', () => {
       let output = document.querySelector('output');
@@ -68,13 +90,26 @@
       let secondNum = document.querySelector('#second-num').value;
       let operator = document.querySelector('#operator').value;
       try{
-        output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+        output.innerHTML = calc(firstNum, operator, secondNum);
       }
       catch(err){
-        console.log("Sadly an error happened friend");
+        if (err instanceof zeroError){
+          console.log("You need to review your 4th grade math :/");
+        }
+        else{
+        console.log("Sadly an error happened, friend");
+        }
+
+      }
+      finally{
         output.innerHTML = '0';
+        console.log("The result might not be accurate.")
       }
     });
+
+    window.onerror = function() {
+        alert("Error caught");
+    };
 
 
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
@@ -92,10 +127,13 @@
       console.dirxml(errorBtns[3]);
     });
     errorBtns[4].addEventListener('click',() => {
-      //console.group();
+      var label = 'Easily the best group';
+      console.group(label);
+      console.info('Sidd');
+      console.info('Nada');
     });
     errorBtns[5].addEventListener('click',() => {
-      //console.groupEnd();
+      console.groupEnd('Easily the best group');
     });
     errorBtns[6].addEventListener('click',() => {
       console.table([
@@ -121,9 +159,18 @@
       console.timeEnd("timer");
       console.log("Timer ended!");
     });
+    errorBtns[9].addEventListener('click',() => {
+      console.trace()
+    });
+    errorBtns[10].addEventListener('click',() => {
+        throw new Error("Triggering a global error");
+    });
 
 
 
   </script>
+
+
+
 </body>
 </html>
